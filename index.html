@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دسته‌بندی جمله‌های جبری متشابه</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--navy:#232b5a;--cream:#fffbf0;--orange:#ffa31f;--blue:#3a4bcc;--g:#2ecc71;--r:#e74c3c}
+*{box-sizing:inherit}
+body{margin:0;min-height:100vh;background:linear-gradient(#5bc0ff,#b6e8ff);font-family:Tahoma,"Vazirmatn",sans-serif;color:var(--navy);display:flex;justify-content:center;overflow:hidden;height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
+html{overflow:hidden}
+.wrap{width:100%;max-width:520px;height:100%;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.top{display:flex;gap:8px;align-items:center}
+.btn{border:3px solid var(--navy);border-radius:16px;padding:6px 10px;font:inherit;font-size:14px;font-weight:800;color:var(--navy);background:var(--orange);box-shadow:0 5px 0 var(--navy);cursor:pointer}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--navy)}
+.btn:disabled{background:#e9e4d6;opacity:.7}
+.score{margin-inline-start:auto;background:var(--cream);cursor:default}
+.card{background:var(--cream);border:4px solid var(--navy);border-radius:22px;box-shadow:0 6px 0 var(--navy);padding:10px}
+.eq{display:flex;justify-content:center;align-items:center;gap:8px;direction:ltr;font-size:26px;font-weight:800;flex-wrap:wrap}
+.chip{border:3px solid var(--navy);border-radius:12px;padding:1px 10px;min-width:44px;text-align:center;font-weight:800}
+.cg{background:#bff2d3}.cr{background:#ffc9c2}
+.box{background:#e6eeff;border-color:var(--navy);outline:3px solid var(--orange);outline-offset:2px;min-width:56px;height:46px;display:flex;align-items:center;justify-content:center}
+.box.ok{background:#fff0c4}
+.q{margin-top:8px;text-align:center;font-size:15px;font-weight:800;line-height:1.9}
+.q .chip{display:inline-block;direction:ltr;unicode-bidi:isolate;padding:0 7px;font-size:14px;min-width:0;border-width:2px;border-radius:9px}
+.hint{display:none;margin-top:6px;background:#ffe3a8;border:2px dashed var(--navy);border-radius:12px;padding:6px;font-weight:800;text-align:center;font-size:13px}
+.stage{flex:1;min-height:0;display:flex;align-items:center;padding:6px 8px}
+.line{position:relative;width:100%;height:110px;direction:ltr}
+.bar{position:absolute;left:0;right:0;top:66px;height:3px;background:linear-gradient(90deg,transparent,var(--navy) 4%,var(--navy) 96%,transparent);border-radius:2px}
+.tick{position:absolute;top:61px;width:2px;height:13px;background:var(--navy);opacity:.75;transform:translateX(-50%);border-radius:1px}
+.lab{position:absolute;top:80px;transform:translateX(-50%);font-size:12px;font-weight:800;white-space:nowrap}
+.orb{position:absolute;top:58px;width:20px;height:20px;margin-left:-10px;border-radius:50%;border:2px solid var(--navy);box-shadow:inset -3px -3px 0 rgba(0,0,0,.18),0 2px 0 var(--navy)}
+.orb.g{background:var(--g)}.orb.r{background:var(--r)}
+.orb.me{transition:left .32s linear;z-index:3}
+.orb i{display:block;width:100%;height:100%;border-radius:50%}
+.drop{animation:drop .8s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes drop{from{transform:translateY(-90px);opacity:0}to{transform:none;opacity:1}}
+.hop{animation:hop .32s ease-out}
+@keyframes hop{50%{transform:translateY(-26px)}}
+.cnt{position:absolute;top:0;transform:translateX(-50%);background:var(--cream);border:2px solid var(--navy);border-radius:10px;padding:0 8px;font-weight:800;font-size:15px;transition:left .32s linear;z-index:4;opacity:0}
+.cnt.on{opacity:1}
+.msg{min-height:22px;text-align:center;font-weight:800;font-size:14px}
+.btns{display:flex;gap:14px}
+.dir{flex:1;padding:11px 0;font-size:19px;border-radius:18px;background:var(--orange)}
+#R{background:var(--blue);color:#fff}
+.dir.sel{outline:5px solid #fff;outline-offset:2px}
+.go{width:100%;padding:11px 0;font-size:19px;background:var(--blue);color:#fff;border-radius:18px}
+.fly{position:fixed;z-index:9;border:3px solid var(--navy);border-radius:12px;background:#fff0c4;font-weight:800;font-size:26px;padding:1px 10px;transition:all .8s ease-in-out;direction:ltr}
+.shake{animation:sh .4s}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.foot{text-align:center;font-weight:800;font-size:12px;opacity:.85}
+
+.q{font-size:16px;margin-top:0}
+.sub{text-align:center;font-size:12px;font-weight:700;opacity:.8}
+.scale{display:flex;align-items:center;gap:6px;direction:ltr;font-size:12px;font-weight:800;margin-bottom:6px}
+.scale i{flex:1;height:3px;background:var(--navy);border-radius:2px;position:relative}
+.scale i::after{content:"";position:absolute;right:-2px;top:-5px;border:6px solid transparent;border-left:9px solid var(--navy);border-right:0}
+.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;direction:ltr}
+.slot{height:44px;border:2px dashed var(--navy);border-radius:12px;background:#e6eeff;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative}
+.slot::before{content:attr(data-n);position:absolute;top:-9px;right:6px;background:var(--cream);border-radius:8px;padding:0 5px;font-size:10px;font-weight:800}
+.slot.f{border-style:solid;background:var(--cream)}
+.slot.ok{background:#bff2d3}.slot.bad{background:#ffc9c2;animation:sh .4s}
+.nc{border:2px solid var(--navy);border-radius:10px;min-width:0;flex:1;height:38px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;direction:ltr;box-shadow:0 3px 0 var(--navy);touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;padding:0 2px}
+.slot .nc{box-shadow:none;border:0;background:transparent;pointer-events:none;height:auto}
+.ng{background:#bff2d3}.nr{background:#ffc9c2}.nz{background:#ffe3a8}
+.nc.sel{outline:4px solid var(--orange);outline-offset:2px}
+.slot .nc.ng,.slot .nc.nr,.slot .nc.nz{background:transparent}
+.pool{display:flex;flex-wrap:nowrap;gap:6px;justify-content:center;align-items:center;width:100%}
+.ghost{min-width:50px;flex:none!important;position:fixed;z-index:30;pointer-events:none;transform:scale(1.15) rotate(-4deg);opacity:.95}
+.rnd{background:var(--cream);cursor:default}
+.ov{position:fixed;inset:0;background:rgba(35,43,90,.55);display:none;align-items:center;justify-content:center;z-index:40}
+.ov .card{text-align:center;width:min(88%,380px);font-weight:800;line-height:2}
+.big{font-size:38px;line-height:1.3}
+.lv{width:100%;padding:11px 0;font-size:17px;border-radius:16px;margin-top:8px}
+.extxt{text-align:right;font-size:14px;line-height:2;font-weight:700}
+
+.grps{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grp{min-height:104px;border:2px dashed var(--navy);border-radius:12px;background:#e6eeff;padding:16px 6px 6px;position:relative;display:flex;flex-wrap:wrap;gap:5px;align-content:flex-start;cursor:pointer}
+.grp::before{content:attr(data-n);position:absolute;top:-1px;right:8px;background:var(--navy);color:#fff;border-radius:0 0 8px 8px;padding:0 8px;font-size:11px;font-weight:800}
+.grp.ok{background:#bff2d3;border-style:solid}.grp.bad{background:#ffc9c2;animation:sh .4s}
+.nt{background:#cfe0ff;font-size:19px;height:38px;white-space:nowrap;padding:0 8px;font-family:"Cambria Math","STIX Two Math","Times New Roman",Georgia,serif;font-weight:700;letter-spacing:.3px}
+.pool .nt{flex:1 1 22%;min-width:auto}
+.grp .nt{flex:1 1 calc(50% - 5px);background:#fff0c4;height:32px;box-shadow:none;cursor:pointer}
+.v{font-family:"Cambria Math","STIX Two Math","Times New Roman",Georgia,serif;font-weight:700}
+.co{font-family:"Vazirmatn",Tahoma,sans-serif;font-weight:800}
+.v{font-style:italic;font-size:1.12em;margin-left:1px}
+.extxt .v,.extxt .co{font-size:1.15em}
+sup{font-family:"Vazirmatn",Tahoma,sans-serif;font-size:.78em;font-weight:800;color:#c0392b;position:relative;top:-.5em;vertical-align:baseline;line-height:0;margin:0 1px 0 1px}
+.extxt{font-size:13.5px}
+.pool.two{display:grid;grid-template-columns:1fr 1fr}
+.pool.two .nt{flex:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <button class="btn" id="home">🏠 بازگشت</button>
+    <button class="btn" id="next">بعدی ➡️</button>
+    <div class="btn rnd">🎲 <span id="rn"></span></div>
+    <div class="btn score">⭐ <span id="sc">۰</span></div>
+  </div>
+  <div class="card">
+    <div class="q">🎯 جمله‌های متشابه را در یک دسته بگذار</div>
+    <div class="sub">جمله را بکش و در یکی از دو دسته بگذار، یا اول جمله و بعد دسته را لمس کن</div>
+  </div>
+  <div class="card"><div class="grps" id="grps"></div></div>
+  <div class="card stage"><div class="pool" id="pool"></div></div>
+  <div class="msg" id="msg"></div>
+  <button class="btn go" id="check">✔️ بررسی دسته‌بندی</button>
+  <div class="foot">طراح: سمانه شریعتی بین کلایی | شهرستان آمل | استان مازندران</div>
+</div>
+<div class="ov" id="lvov" style="display:flex"><div class="card"><div class="big">🧩</div><div style="font-size:17px">سطح بازی را انتخاب کن</div>
+<button class="btn lv" data-l="e" style="background:#bff2d3">🌱 آسان — یک متغیر</button>
+<button class="btn lv" data-l="m" style="background:var(--orange)">🔥 متوسط — دو متغیر</button>
+<button class="btn lv" data-l="h" style="background:#ffc9c2">🚀 سخت — سه متغیر و جابه‌جایی ترتیب</button></div></div>
+<div class="ov" id="rsov"><div class="card"><div class="big">🏆</div><div id="rstxt"></div><button class="btn go" id="rsok" style="margin-top:8px">🔄 انتخاب سطح</button></div></div>
+<div class="ov" id="exov"><div class="card"><div style="font-size:18px">💡 جواب درست و توضیح</div><div class="extxt" id="extxt"></div><button class="btn go" id="exok" style="margin-top:8px">فهمیدم ✔️</button></div></div>
+<script>
+const fa=n=>String(n).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const shuf=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let AC=null;
+function ac(){try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();}catch(e){}return AC}
+function tone(f,d,type,v,delay,f2){if(!AC)return;const t=AC.currentTime+(delay||0),o=AC.createOscillator(),g=AC.createGain();o.type=type||"sine";o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(v||.15,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.02);}
+const snd={
+ click(){ac();tone(600,.06,"triangle",.1)},
+ drop(){tone(500,.25,"sine",.12,0,180);tone(450,.2,"sine",.1,.22,170)},
+ hop(n){const k=Math.min(n,12)*40;tone(380+k,.14,"triangle",.18,0,620+k)},
+ lift(){tone(500,.2,"sine",.12,0,900)},
+ whoosh(){tone(300,.7,"sawtooth",.05,0,1200)},
+ bad(){tone(200,.25,"square",.08,0,120)},
+ win(){[523,659,784,1047].forEach((f,k)=>tone(f,.2,"triangle",.15,k*.11))}
+};
+
+
+const NAMES={e:"آسان",m:"متوسط",h:"سخت"};
+const TOTAL=20;let okc=0;
+const LETTERS=["x","y","a","b","t","m"];
+let lvl="e",r=0,score=0,terms=[],groups=[[],[]],sel=null,tries=0,solved=false,marks=[],busy=false;
+const keyOf=L=>Object.keys(L).sort().map(v=>v+L[v]).join("");
+const litHtml=(L,ord)=>(ord||Object.keys(L).sort()).map(v=>`<span class="v">${v}</span>${L[v]>1?`<sup>${fa(L[v])}</sup>`:""}`).join("");
+const termHtml=t=>`<span class="co">${t.c<0?"−":""}${Math.abs(t.c)!==1?fa(Math.abs(t.c)):""}</span>${litHtml(t.L,t.ord)}`;
+function derive(L,vars,hard){
+  let M,k=0;
+  do{
+    M={...L};const ks=Object.keys(M),m=rnd(0,hard?3:2);
+    if(m===0&&ks.length>1){const [a,b]=shuf(ks.slice());[M[a],M[b]]=[M[b],M[a]]}
+    else if(m===3){const free=vars.filter(v=>!(v in M));if(free.length&&Math.random()<.5)M[free[0]]=1;else if(ks.length>1)delete M[ks[0]];else M[ks[0]]=M[ks[0]]%3+1}
+    else{const v=ks[rnd(0,ks.length-1)];M[v]=M[v]%3+1}
+  }while(keyOf(M)===keyOf(L)&&++k<60);
+  return M;
+}
+function genTerms(){
+  const nv=lvl==="e"?1:lvl==="m"?2:3,MAX=lvl==="h"?12:9;
+  const vars=shuf(LETTERS.slice()).slice(0,nv),L={};
+  const use=lvl==="h"?shuf(vars.slice()).slice(0,rnd(2,3)):vars;
+  use.forEach(v=>L[v]=rnd(1,3));
+  const L2=derive(L,vars,lvl==="h");
+  const spec=Math.random()<.5?[L,L,L2,L2]:(Math.random()<.5?[L,L,L,L2]:[L,L2,L2,L2]);
+  const used={};
+  const t=spec.map(X=>{const key=keyOf(X);used[key]=used[key]||new Set();let c;do{c=rnd(1,MAX)*(Math.random()<.5?-1:1)}while(used[key].has(c));used[key].add(c);return {c,L:X,key}});
+  const mix=lvl==="h"||(lvl==="m"&&Math.random()<.4);
+  t.forEach(x=>{x.ord=mix?shuf(Object.keys(x.L)):Object.keys(x.L).sort()});
+  shuf(t);t.forEach((x,i)=>x.id=i);return t;
+}
+const termLen=t=>(Math.abs(t.c)!==1?String(Math.abs(t.c)).length:0)+(t.c<0?1:0)+Object.keys(t.L).length+Object.values(t.L).filter(e=>e>1).length;
+const chip=(t,extra="")=>`<div class="nc nt ${extra}" data-v="${t.id}">${termHtml(t)}</div>`;
+function render(){
+  $("grps").innerHTML=[0,1].map(g=>`<div class="grp ${marks[g]||""}" data-g="${g}" data-n="دستهٔ ${fa(g+1)}">${groups[g].map(id=>chip(terms[id])).join("")}</div>`).join("");
+  $("pool").innerHTML=terms.filter(t=>!groups[0].includes(t.id)&&!groups[1].includes(t.id)).map(t=>chip(t,sel===t.id?"sel":"")).join("");
+  $("pool").classList.toggle("two",terms.some(t=>termLen(t)>=6));
+  $("rn").textContent=fa(r+1)+"/"+fa(TOTAL);
+}
+function newRound(){
+  terms=genTerms();groups=[[],[]];sel=null;tries=0;solved=false;marks=[];busy=false;
+  $("msg").textContent=`سطح ${NAMES[lvl]} — سؤال ${fa(r+1)} از ${fa(TOTAL)}`;
+  $("next").textContent=r>=TOTAL-1?"پایان 🏁":"بعدی ➡️";
+  render();snd.drop();
+}
+function place(id,g){
+  if(solved||busy)return;
+  groups[g].push(id);sel=null;marks=[];snd.hop(groups[g].length);render();
+}
+$("grps").onclick=e=>{
+  ac();if(solved||busy)return;
+  const g=e.target.closest(".grp");if(!g)return;
+  const gi=+g.dataset.g,c=e.target.closest(".nc");
+  if(sel!==null)place(sel,gi);
+  else if(c){const id=+c.dataset.v;groups[gi]=groups[gi].filter(x=>x!==id);marks=[];snd.click();render();}
+};
+let drag=null;
+$("pool").addEventListener("pointerdown",e=>{
+  const c=e.target.closest(".nc");if(!c||solved||busy)return;ac();
+  drag={v:+c.dataset.v,el:c,x:e.clientX,y:e.clientY,ghost:null};
+  try{c.setPointerCapture(e.pointerId)}catch(_){}
+});
+window.addEventListener("pointermove",e=>{
+  if(!drag)return;
+  if(!drag.ghost&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>8){
+    const g=drag.el.cloneNode(true);g.classList.add("ghost");g.classList.remove("sel");document.body.appendChild(g);
+    drag.ghost=g;drag.el.style.opacity=".3";snd.lift();
+  }
+  if(drag.ghost){drag.ghost.style.left=e.clientX-drag.ghost.offsetWidth/2+"px";drag.ghost.style.top=e.clientY-drag.ghost.offsetHeight/2-24+"px";}
+});
+function endDrag(e,ok){
+  if(!drag)return;const d=drag;drag=null;
+  if(d.ghost){
+    d.ghost.remove();d.el.style.opacity="1";
+    if(ok){const t=document.elementFromPoint(e.clientX,e.clientY),g=t&&t.closest(".grp");if(g)place(d.v,+g.dataset.g);}
+  }else if(ok){sel=sel===d.v?null:d.v;snd.click();render();}
+}
+window.addEventListener("pointerup",e=>endDrag(e,true));
+window.addEventListener("pointercancel",e=>endDrag(e,false));
+function explain(){
+  const keys=[...new Set(terms.map(t=>t.key))];
+  let h="";
+  keys.forEach(k=>{
+    const ts=terms.filter(t=>t.key===k);
+    h+=`🔹 <bdi dir="ltr">${ts.map(termHtml).join(" ، ")}</bdi> ← قسمت حرفی همه <bdi dir="ltr">${litHtml(ts[0].L)}</bdi> است؛ فقط ضریب‌ها فرق دارند، پس متشابه‌اند.<br>`;
+  });
+  const a=terms.find(t=>t.key===keys[0]),b=terms.find(t=>t.key===keys[1]);
+  h+=`🔹 این دو دسته با هم متشابه نیستند، چون متغیرها یا توان‌هایشان فرق دارد: <bdi dir="ltr">${litHtml(a.L)}</bdi> و <bdi dir="ltr">${litHtml(b.L)}</bdi><br>`;
+  h+="🔹 یادت باشد: در جمله‌های متشابه، قسمت حرفی (متغیرها و توان‌ها) یکسان است؛ ضریب و ترتیب نوشتن متغیرها مهم نیست.";
+  $("extxt").innerHTML=h;$("exov").style.display="flex";
+}
+$("check").onclick=()=>{
+  ac();if(solved||busy)return;
+  if(groups[0].length+groups[1].length<4){$("msg").textContent="اول همهٔ جمله‌ها را در دسته‌ها بگذار! 👆";snd.click();return}
+  tries++;
+  const hom=g=>g.length>0&&g.every(id=>terms[id].key===terms[g[0]].key);
+  const ok=[hom(groups[0]),hom(groups[1])];
+  marks=ok.map(b=>b?"ok":"bad");render();
+  if(ok[0]&&ok[1]){
+    solved=true;okc++;const pts=tries===1?10:5;score+=pts;$("sc").textContent=fa(score);
+    $("msg").textContent=`🎉 آفرین! دسته‌بندی درست است. ${fa(pts)}+ امتیاز`;snd.win();
+  }else if(tries>=2){
+    solved=true;snd.bad();
+    const keys=[...new Set(terms.map(t=>t.key))];
+    groups=keys.map(k=>terms.filter(t=>t.key===k).map(t=>t.id));marks=["ok","ok"];render();explain();
+    $("msg").textContent="جواب درست نشان داده شد؛ برای سؤال بعدی آماده شو 💪";
+  }else{
+    busy=true;snd.bad();
+    $("msg").textContent="❌ دسته‌بندی درست نیست؛ دوباره فکر کن.";
+    setTimeout(()=>{marks=[];busy=false;render()},1300);
+  }
+};
+function finish(){
+  const m=okc>=18?"عالی بود! استاد جمله‌های متشابه شدی 🌟":okc>=14?"آفرین! خیلی خوب بود 👏":okc>=8?"خوب بود، با تمرین بهتر می‌شوی 💪":"بیشتر تمرین کن، می‌توانی! 🌱";
+  $("rstxt").innerHTML=`سطح ${NAMES[lvl]}<br>امتیاز شما: ${fa(score)} از ${fa(TOTAL*10)}<br>پاسخ درست: ${fa(okc)} از ${fa(TOTAL)}<br>${m}`;
+  $("rsov").style.display="flex";snd.win();
+}
+$("rsok").onclick=()=>{snd.click();$("rsov").style.display="none";$("lvov").style.display="flex"};
+$("exok").onclick=()=>{snd.click();$("exov").style.display="none"};
+$("next").onclick=()=>{ac();snd.click();if(r>=TOTAL-1){finish();return}r++;newRound()};
+document.querySelectorAll(".lv").forEach(b=>b.onclick=()=>{ac();snd.click();lvl=b.dataset.l;r=0;score=0;okc=0;$("sc").textContent=fa(0);$("lvov").style.display="none";newRound()});
+$("home").onclick=()=>{ac();snd.click();$("lvov").style.display="flex"};
+newRound();
+</script>
+</body>
+</html>
